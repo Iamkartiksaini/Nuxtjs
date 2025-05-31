@@ -1,25 +1,23 @@
 <template>
-    <button :class="buttonClass" @click="handleClick">
-        {{ label }}
+    <button v-bind="restProps">
+        <slot>{{ label }}</slot>
     </button>
 </template>
 
 <script>
 export default {
+    name: 'Button',
     props: {
         label: {
             type: String,
-            required: true,
-        },
-        buttonClass: {
-            type: String,
-            default: 'default-button',
-        },
+            default: ''
+        }
     },
-    methods: {
-        handleClick() {
-            this.$emit('button-clicked');
-        },
-    },
-};
+    computed: {
+        restProps() {
+            const { label, ...rest } = this.$props;
+            return rest;
+        }
+    }
+}
 </script>
